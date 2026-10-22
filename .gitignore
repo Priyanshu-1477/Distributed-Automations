@@ -43,3 +43,6 @@ data/
 # Docker volume data if mounted locally
 postgres_data/
 redis_data/
+
+# Documentation
+docs/

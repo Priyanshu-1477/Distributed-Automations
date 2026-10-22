@@ -105,3 +105,4 @@ python scripts/generate_architecture_pdf.py docs/distributed_automation_architec
 ```bash
 docker compose up -d postgres redis
 ```
+
