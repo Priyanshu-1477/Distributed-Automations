@@ -9,19 +9,9 @@
 
 A distributed task execution platform featuring a **FastAPI** orchestrator, **Celery** workers, **Redis** operational message brokering, and **PostgreSQL** authoritative state persistence.
 
-Rebuilt and modernized from the original architectural study baseline in `01_distributed_automation_platform.tex`.
-
 ---
 
-## Documentation & Architecture Manual
-
-- 📄 **[Detailed Architecture & Execution Dry Run (Markdown)](docs/ARCHITECTURE_AND_EXECUTION_FLOW.md)**: File-by-file breakdown, sequence diagrams, failure recovery mechanics, and data flow walkthrough.
-- 📕 **[Technical Architecture & Implementation Manual (PDF)](docs/distributed_automation_architecture_manual.pdf)**: Complete 4-page printable architectural study guide.
-- 📋 **[Milestone 0: Architecture Specification & Roadmap](file:///home/priyanshu_grd/.gemini/antigravity/brain/9b42113f-8af6-4620-bf36-d5521dd61e71/milestone_0_architecture_and_plan.md)**: Foundational specification with requirements matrix, dual-write strategy, and state machine transition rules.
-
----
-
-## System Architecture
+## Architecture Overview
 
 ```
                           +-------------------------+
@@ -70,39 +60,106 @@ Rebuilt and modernized from the original architectural study baseline in `01_dis
 
 ---
 
-## Quickstart
+## Getting Started
 
-### 1. Setup Local Environment
+### 1. Clone the Repository
 
 ```bash
-# Create virtual environment
+git clone https://github.com/Priyanshu-1477/Distributed-Automations.git
+cd Distributed-Automations
+```
+
+### 2. Environment Setup
+
+Create and activate a Python virtual environment (Python 3.12+ recommended):
+
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
-# Install dependencies in editable mode with dev tools
+Install the package in editable mode along with development dependencies:
+
+```bash
 pip install -e ".[dev]"
 ```
 
-### 2. Run Tests & Linter
+Initialize your local environment variables:
 
 ```bash
-# Run automated test suite
-pytest -v
-
-# Run linter and formatter checks
-ruff check .
-ruff format --check .
+cp .env.example .env
 ```
 
-### 3. Generate Architecture PDF Manual
+### 3. Start Local Infrastructure
 
-```bash
-python scripts/generate_architecture_pdf.py docs/distributed_automation_architecture_manual.pdf
-```
-
-### 4. Run Local Infrastructure via Docker Compose
+Launch the PostgreSQL 16 and Redis 7 services using Docker Compose:
 
 ```bash
 docker compose up -d postgres redis
 ```
 
+Verify that the containers are healthy:
+
+```bash
+docker compose ps
+```
+
+### 4. Apply Database Migrations
+
+Run Alembic migrations to create tables, indexes, and constraints:
+
+```bash
+alembic upgrade head
+```
+
+To inspect the raw SQL DDL without applying it:
+
+```bash
+alembic upgrade base:head --sql
+```
+
+### 5. Run the Application
+
+Start the FastAPI orchestrator service locally:
+
+```bash
+uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Verify service liveness and readiness:
+
+```bash
+curl http://localhost:8000/health/live
+curl http://localhost:8000/health/ready
+```
+
+Interactive OpenAPI documentation is available at:
+`http://localhost:8000/docs`
+
+---
+
+## Development & Testing
+
+### Run Automated Tests
+
+Execute the unit and integration test suite:
+
+```bash
+pytest -v
+```
+
+### Linting & Formatting
+
+Check code quality and formatting with Ruff:
+
+```bash
+ruff check .
+ruff format --check .
+```
+
+To automatically apply fixes and format code:
+
+```bash
+ruff check --fix .
+ruff format .
+```
