@@ -1,0 +1,45 @@
+# Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables (NEVER commit secrets)
+.env
+.env.local
+*.env
+
+# Build / packaging
+*.egg-info/
+build/
+dist/
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Linter & Formatter caches
+.ruff_cache/
+.mypy_cache/
+
+# Databases / local storage
+*.sqlite3
+*.db
+data/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker volume data if mounted locally
+postgres_data/
+redis_data/
