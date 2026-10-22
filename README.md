@@ -163,3 +163,4 @@ To automatically apply fixes and format code:
 ruff check --fix .
 ruff format .
 ```
+
