@@ -21,3 +21,4 @@ COPY src/ /app/src/
 
 # Default entrypoint for celery worker
 CMD ["celery", "-A", "src.worker.celery_app.celery_app", "worker", "--loglevel=INFO", "-c", "2"]
+
